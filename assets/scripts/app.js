@@ -1,21 +1,30 @@
-const addMovieModal = document.getElementById("add-modal");
-const startAddMovieButton = document.querySelector("header button");
-const cancelAddMovieButton = addMovieModal.querySelector(".btn--passive");
+const addMovieModal = document.getElementById('add-modal');
+const startAddMovieButton = document.querySelector('header button');
+const cancelAddMovieButton = addMovieModal.querySelector('.btn--passive');
 const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
-const userInputs = addMovieModal.querySelectorAll("input");
-const backdrop = document.getElementById("backdrop");
+const userInputs = addMovieModal.querySelectorAll('input');
+const backdrop = document.getElementById('backdrop');
+
+const movies = [];
 
 const toggleBackdrop = () => {
-  backdrop.classList.toggle("visible");
+  backdrop.classList.toggle('visible');
 };
 
 const toggleMovieModal = () => {
-  addMovieModal.classList.toggle("visible");
+  addMovieModal.classList.toggle('visible');
   toggleBackdrop();
+};
+
+const clearMovieInput = () => {
+  for (const usrInput of userInputs) {
+    usrInput.value = '';
+  }
 };
 
 const cancelAddMovieHandler = () => {
   toggleMovieModal();
+  clearMovieInput();
 };
 
 const backdropClickHandler = () => {
@@ -28,20 +37,31 @@ const addMovieHandler = () => {
   const ratingValue = userInputs[2].value;
 
   if (
-    titleValue.trim() === "" ||
-    imageUrlValue.trim() === "" ||
-    ratingValue === "" ||
+    titleValue.trim() === '' ||
+    imageUrlValue.trim() === '' ||
+    ratingValue === '' ||
     parseInt(ratingValue) < 1 ||
     parseInt(ratingValue) > 5
   ) {
     alert(
-      "Please enter valid values (rating should be picked between 1 and 5)."
+      'Please enter valid values (rating should be picked between 1 and 5).'
     );
     return;
   }
+
+  const newMovie = {
+    title: titleValue,
+    image: imageUrlValue,
+    rating: ratingValue,
+  };
+
+  movies.push(newMovie);
+  console.log(movies);
+  toggleMovieModal();
+  clearMovieInput();
 };
 
-startAddMovieButton.addEventListener("click", toggleMovieModal);
-backdrop.addEventListener("click", backdropClickHandler);
-cancelAddMovieButton.addEventListener("click", cancelAddMovieHandler);
-confirmAddMovieButton.addEventListener("click");
+startAddMovieButton.addEventListener('click', toggleMovieModal);
+backdrop.addEventListener('click', backdropClickHandler);
+cancelAddMovieButton.addEventListener('click', cancelAddMovieHandler);
+confirmAddMovieButton.addEventListener('click');
