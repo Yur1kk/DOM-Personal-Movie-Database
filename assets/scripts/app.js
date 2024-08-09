@@ -29,6 +29,7 @@ const deleteMovie = (movieId) => {
   const listRoot = document.getElementById('movie-list');
   listRoot.children[movieIndex].remove();
   closeMovieDeletionModal();
+  updateUI();
 };
 
 const closeMovieDeletionModal = () => {
